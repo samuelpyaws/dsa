@@ -1,0 +1,109 @@
+Middle element in linkedlist:
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node *next;
+};
+
+int main() {
+    int n, i, value;
+    struct Node *head = NULL, *temp = NULL, *newNode = NULL;
+    struct Node *slow, *fast;
+
+    // Read number of nodes
+    scanf("%d", &n);
+
+    // Create linked list
+    for (i = 0; i < n; i++) {
+        scanf("%d", &value);
+
+        newNode = (struct Node *)malloc(sizeof(struct Node));
+        newNode->data = value;
+        newNode->next = NULL;
+
+        if (head == NULL) {
+            head = newNode;
+            temp = head;
+        } else {
+            temp->next = newNode;
+            temp = newNode;
+        }
+    }
+
+    // Initialize slow and fast pointers
+    slow = head;
+    fast = head;
+
+    // Move fast by 2 and slow by 1
+    // For even length, this gives the FIRST middle
+    while (fast->next != NULL && fast->next->next != NULL) {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+
+    // Print middle element
+    printf("%d", slow->data);
+
+    return 0;
+}
+....................................................................
+2.Reverse a linked list:
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node *next;
+};
+
+int main() {
+    int n, i, value;
+    struct Node *head = NULL, *tail = NULL, *newNode;
+    struct Node *prev = NULL, *curr = NULL, *next = NULL;
+
+    // Read number of nodes
+    scanf("%d", &n);
+
+    // Create linked list
+    for (i = 0; i < n; i++) {
+        scanf("%d", &value);
+
+        newNode = (struct Node *)malloc(sizeof(struct Node));
+        newNode->data = value;
+        newNode->next = NULL;
+
+        if (head == NULL) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            tail->next = newNode;
+            tail = newNode;
+        }
+    }
+
+    // Reverse the linked list (Iterative)
+    curr = head;
+    while (curr != NULL) {
+        next = curr->next;   // store next
+        curr->next = prev;   // reverse link
+        prev = curr;         // move prev
+        curr = next;         // move curr
+    }
+
+    head = prev; // new head
+
+    // Print reversed list
+    curr = head;
+    while (curr != NULL) {
+        printf("%d", curr->data);
+        if (curr->next != NULL)
+            printf(" ");
+        curr = curr->next;
+    }
+
+    return 0;
+}
+
