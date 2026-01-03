@@ -1,0 +1,256 @@
+----------------------------------------------------------------Stack class-----------------------------------------------------------------------------------------
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_SIZE 5   // predefined maximum size
+
+int stack[MAX_SIZE];
+int top = -1;
+
+/* Function to check if stack is empty */
+int isEmpty() {
+    return top == -1;
+}
+
+/* Function to check if stack is full */
+int isFull() {
+    return top == MAX_SIZE - 1;
+}
+
+/* Push operation */
+void push(int x) {
+    if (isFull()) {
+        printf("Stack Overflow\n");
+        return;
+    }
+    stack[++top] = x;
+}
+
+/* Pop operation */
+void pop() {
+    if (isEmpty()) {
+        printf("Stack Underflow\n");
+        return;
+    }
+    top--;
+}
+
+/* Peek operation */
+void peek() {
+    if (isEmpty()) {
+        printf("Stack Underflow\n");
+        return;
+    }
+    printf("%d\n", stack[top]);
+}
+
+int main() {
+    int n, x;
+    char op[10];
+
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%s", op);
+
+        if (strcmp(op, "PUSH") == 0) {
+            scanf("%d", &x);
+            push(x);
+        } 
+        else if (strcmp(op, "POP") == 0) {
+            pop();
+        } 
+        else if (strcmp(op, "PEEK") == 0) {
+            peek();
+        }
+    }
+
+    return 0;
+}
+
+Sample Run (Test Case 1)
+6
+PUSH 10
+PUSH 20
+PUSH 30
+PEEK
+POP
+PEEK
+Output
+30
+20
+Sample Run (Overflow Case)
+
+Input
+7
+PUSH 1
+PUSH 2
+PUSH 3
+PUSH 4
+PUSH 5
+PUSH 6
+PUSH 7
+Output
+Stack Overflow
+Stack Overflow
+
+---------------------------------------C Program: Stack Using Singly Linked List------------------------------------------------------------------------------------
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+/* Node structure */
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+struct Node* top = NULL;
+
+/* Check if stack is empty */
+int isEmpty() {
+    return top == NULL;
+}
+
+/* Push operation */
+void push(int x) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = x;
+    newNode->next = top;
+    top = newNode;
+}
+
+/* Pop operation */
+void pop() {
+    if (isEmpty()) {
+        printf("Stack Underflow\n");
+        return;
+    }
+    struct Node* temp = top;
+    top = top->next;
+    free(temp);
+}
+
+/* Peek operation */
+void peek() {
+    if (isEmpty()) {
+        printf("Stack Underflow\n");
+        return;
+    }
+    printf("%d\n", top->data);
+}
+
+int main() {
+    int n, x;
+    char op[10];
+
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%s", op);
+
+        if (strcmp(op, "PUSH") == 0) {
+            scanf("%d", &x);
+            push(x);
+        } 
+        else if (strcmp(op, "POP") == 0) {
+            pop();
+        } 
+        else if (strcmp(op, "PEEK") == 0) {
+            peek();
+        }
+    }
+
+    return 0;
+}
+Sample Run (Test Case 4)
+Input
+3
+POP
+PUSH 15
+PEEK
+Output
+Stack Underflow
+15
+-------------------------------------------------Push an element----------------------------------------------------------------------
+#include <stdio.h>
+
+#define MAX 100000
+
+int main() {
+    int n;
+    int stack[MAX];
+    int top = -1;
+
+    scanf("%d", &n);
+
+    // Push elements
+    for (int i = 0; i < n; i++) {
+        int x;
+        scanf("%d", &x);
+        stack[++top] = x;   // PUSH operation
+    }
+
+    // Print stack in LIFO order
+    printf("Stack after pushing elements: [");
+    for (int i = top; i >= 0; i--) {
+        printf("%d", stack[i]);
+        if (i != 0)
+            printf(", ");
+    }
+    printf("]");
+
+    return 0;
+}
+Sample Run 1
+Input
+5
+10 20 30 40 50
+
+Output
+Stack after pushing elements: [50, 40, 30, 20, 10]
+Sample Run 2
+
+Input
+3
+5 15 -10
+
+Output
+Stack after pushing elements: [-10, 15, 5]
+
+--------------------------------------------------------Push an Element into Stack----------------------------------------------------------------------------------
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 100000
+
+int main() {
+    int n;
+    int stack[MAX];
+    int top = -1;
+    char op[10];
+    int x;
+
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%s", op);
+
+        if (strcmp(op, "push") == 0) {
+            scanf("%d", &x);
+            stack[++top] = x;   // PUSH
+        }
+        else if (strcmp(op, "pop") == 0) {
+            if (top == -1) {
+                printf("Stack is empty\n");
+            } else {
+                printf("%d\n", stack[top]);  // POP
+                top--;
+            }
+        }
+    }
+
+    return 0;
+}
+------------------------------------------------------------pop an element------------------------------------------------------------------------------------
+you have to complete guys
