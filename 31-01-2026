@@ -1,0 +1,602 @@
+--------------------------------------------------Strong in Linked List--------------------------------------------------------------------------------------------
+-------------------------------------------------Create a Single Linked List------------------------------------------------------------------------------------------
+#include <stdio.h>
+#include <stdlib.h>
+
+// Definition of node
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+// Insert node at end
+struct Node* insertEnd(struct Node* head, int value) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->next = NULL;
+
+    if (head == NULL)
+        return newNode;
+
+    struct Node* temp = head;
+    while (temp->next != NULL)
+        temp = temp->next;
+
+    temp->next = newNode;
+    return head;
+}
+
+// Display linked list
+void display(struct Node* head) {
+    struct Node* temp = head;
+    while (temp != NULL) {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL");
+}
+
+// Main function (MANDATORY)
+int main() {
+    int n, value;
+    struct Node* head = NULL;
+
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &value);
+        head = insertEnd(head, value);
+    }
+
+    display(head);
+    return 0;
+}
+
+---------------------------------------------------
+#include <stdio.h>
+#include <stdlib.h>
+
+// Node structure
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+// Insert at beginning
+struct Node* insertAtBeginning(struct Node* head, int value) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->next = head;
+    return newNode;
+}
+
+// Display linked list
+void display(struct Node* head) {
+    struct Node* temp = head;
+    while (temp != NULL) {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL");
+}
+
+// Main function
+int main() {
+    int n, value;
+    struct Node* head = NULL;
+
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &value);
+        head = insertAtBeginning(head, value);
+    }
+
+    display(head);
+    return 0;
+}
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#include <stdio.h>
+#include <stdlib.h>
+
+// Define the structure of a node
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+// Function to create a new node
+struct Node* insertAtBeginning(struct Node* head,int value){
+struct Node* newNode=(struct Node*)malloc(sizeof(struct Node));
+newNode->data=value;
+newNode->next=head;
+return newNode;
+}
+/*function to display the linked list*/
+void displayList(struct Node* head){
+  if(head==NULL){
+    printf("NULL");
+    return;
+  }
+  while(head!=NULL){
+    printf("%d -> ",head->data);
+    head=head->next;
+  }
+  printf("NULL");
+}
+    int main(){
+      struct Node* head=NULL;
+      int N,value;
+      scanf("%d",&N);
+      for(int i=0;i<N;i++){
+        scanf("%d",&value);
+        head=insertAtBeginning(head,value);
+      }
+      displayList(head);
+    
+    return 0;
+}
+---------------------------------------------------------------
+#include <stdio.h>
+#include <stdlib.h>
+
+// Node structure
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+// Insert node at end
+struct Node* insertAtEnd(struct Node* head, int value) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->next = NULL;
+
+    // If list is empty
+    if (head == NULL)
+        return newNode;
+
+    struct Node* temp = head;
+    while (temp->next != NULL)
+        temp = temp->next;
+
+    temp->next = newNode;
+    return head;
+}
+
+// Display linked list
+void display(struct Node* head) {
+    struct Node* temp = head;
+    while (temp != NULL) {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL");
+}
+
+// Main function
+int main() {
+    int n, value;
+    struct Node* head = NULL;
+
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &value);
+        head = insertAtEnd(head, value);
+    }
+
+    display(head);
+    return 0;
+}
+---------------------------------------------Insert at Specific Position (SLL)------------------------------------------------------------------------------------
+#include <stdio.h>
+#include <stdlib.h>
+
+// Node structure
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+// Insert at specific position
+struct Node* insertAtPosition(struct Node* head, int value, int position) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+
+    // Insert at beginning
+    if (position == 1) {
+        newNode->next = head;
+        return newNode;
+    }
+
+    struct Node* temp = head;
+    for (int i = 1; i < position - 1 && temp != NULL; i++) {
+        temp = temp->next;
+    }
+
+    newNode->next = temp->next;
+    temp->next = newNode;
+
+    return head;
+}
+
+// Display linked list
+void display(struct Node* head) {
+    struct Node* temp = head;
+    while (temp != NULL) {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL");
+}
+
+// Main function
+int main() {
+    int n, value, position, insertValue;
+    struct Node* head = NULL;
+    struct Node* tail = NULL;
+
+    scanf("%d", &n);
+
+    // Create initial list (insert at end)
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &value);
+        struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+        newNode->data = value;
+        newNode->next = NULL;
+
+        if (head == NULL) {
+            head = tail = newNode;
+        } else {
+            tail->next = newNode;
+            tail = newNode;
+        }
+    }
+
+    // Read position and value
+    scanf("%d", &position);
+    scanf("%d", &insertValue);
+
+    // Insert node at given position
+    head = insertAtPosition(head, insertValue, position);
+
+    // Display final list
+    display(head);
+    return 0;
+}
+--------------------------------------------------------Delete First Node (SLL)-------------------------------------------------------------------------------
+#include <stdio.h>
+#include <stdlib.h>
+
+// Node structure
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+// Insert at end (to create list)
+struct Node* insertEnd(struct Node* head, int value) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->next = NULL;
+
+    if (head == NULL)
+        return newNode;
+
+    struct Node* temp = head;
+    while (temp->next != NULL)
+        temp = temp->next;
+
+    temp->next = newNode;
+    return head;
+}
+
+// Delete from beginning
+struct Node* deleteBeginning(struct Node* head) {
+    if (head == NULL)
+        return NULL;
+
+    struct Node* temp = head;
+    head = head->next;
+    free(temp);
+
+    return head;
+}
+
+// Display list
+void display(struct Node* head) {
+    if (head == NULL) {
+        printf("List is empty");
+        return;
+    }
+
+    struct Node* temp = head;
+    while (temp != NULL) {
+        printf("%d", temp->data);
+        if (temp->next != NULL)
+            printf(" ");
+        temp = temp->next;
+    }
+}
+
+// Main function
+int main() {
+    int n, value;
+    struct Node* head = NULL;
+
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &value);
+        head = insertEnd(head, value);
+    }
+
+    // Delete first node
+    head = deleteBeginning(head);
+
+    // Display result
+    display(head);
+    return 0;
+}
+------------------------------------------------------------delete a node from the end of a singly linked list-----------------------------------------------------
+#include <stdio.h>
+#include <stdlib.h>
+
+// Node structure
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+// Insert node at end (create list)
+struct Node* insertEnd(struct Node* head, int value) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->next = NULL;
+
+    if (head == NULL)
+        return newNode;
+
+    struct Node* temp = head;
+    while (temp->next != NULL)
+        temp = temp->next;
+
+    temp->next = newNode;
+    return head;
+}
+
+// Delete node from end
+struct Node* deleteEnd(struct Node* head) {
+    // Empty list
+    if (head == NULL)
+        return NULL;
+
+    // Only one node
+    if (head->next == NULL) {
+        free(head);
+        return NULL;
+    }
+
+    struct Node* temp = head;
+    while (temp->next->next != NULL)
+        temp = temp->next;
+
+    free(temp->next);
+    temp->next = NULL;
+
+    return head;
+}
+
+// Display list
+void display(struct Node* head) {
+    if (head == NULL) {
+        printf("List is empty");
+        return;
+    }
+
+    struct Node* temp = head;
+    while (temp != NULL) {
+        printf("%d", temp->data);
+        if (temp->next != NULL)
+            printf(" ");
+        temp = temp->next;
+    }
+}
+
+// Main function
+int main() {
+    int n, value;
+    struct Node* head = NULL;
+
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &value);
+        head = insertEnd(head, value);
+    }
+
+    // Delete last node
+    head = deleteEnd(head);
+
+    // Display updated list
+    display(head);
+    return 0;
+}
+----------------------------------------------------------Count Nodes in SLL----------------------------------------------------------------------------------------
+#include <stdio.h>
+#include <stdlib.h>
+
+// Node structure
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+// Insert node at end
+struct Node* insertEnd(struct Node* head, int value) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->next = NULL;
+
+    if (head == NULL)
+        return newNode;
+
+    struct Node* temp = head;
+    while (temp->next != NULL)
+        temp = temp->next;
+
+    temp->next = newNode;
+    return head;
+}
+
+// Count number of nodes
+int countNodes(struct Node* head) {
+    int count = 0;
+    struct Node* temp = head;
+
+    while (temp != NULL) {
+        count++;
+        temp = temp->next;
+    }
+
+    return count;
+}
+
+// Main function
+int main() {
+    int n, value;
+    struct Node* head = NULL;
+
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &value);
+        head = insertEnd(head, value);
+    }
+
+    printf("%d", countNodes(head));
+    return 0;
+}
+--------------------------------------------------------------count the number of nodes in a singly linked list------------------------------------------------
+#include <stdio.h>
+#include <stdlib.h>
+
+// Node structure
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+// Insert node at end
+struct Node* insertEnd(struct Node* head, int value) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->next = NULL;
+
+    if (head == NULL)
+        return newNode;
+
+    struct Node* temp = head;
+    while (temp->next != NULL)
+        temp = temp->next;
+
+    temp->next = newNode;
+    return head;
+}
+
+// Count number of nodes
+int countNodes(struct Node* head) {
+    int count = 0;
+    struct Node* temp = head;
+
+    while (temp != NULL) {
+        count++;
+        temp = temp->next;
+    }
+
+    return count;
+}
+
+// Main function
+int main() {
+    int n, value;
+    struct Node* head = NULL;
+
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &value);
+        head = insertEnd(head, value);
+    }
+
+    printf("%d", countNodes(head));
+    return 0;
+}
+-------------------------------------------------Search for an element in a singly linked list----------------------------------------------------------------------
+#include <stdio.h>
+#include <stdlib.h>
+
+// Node structure
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+// Insert node at end
+struct Node* insertEnd(struct Node* head, int value) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->next = NULL;
+
+    if (head == NULL)
+        return newNode;
+
+    struct Node* temp = head;
+    while (temp->next != NULL)
+        temp = temp->next;
+
+    temp->next = newNode;
+    return head;
+}
+
+// Search element
+int search(struct Node* head, int key) {
+    struct Node* temp = head;
+    while (temp != NULL) {
+        if (temp->data == key)
+            return 1;
+        temp = temp->next;
+    }
+    return 0;
+}
+
+// Main function
+int main() {
+    int n, value, key;
+    struct Node* head = NULL;
+
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &value);
+        head = insertEnd(head, value);
+    }
+
+    scanf("%d", &key);
+
+    if (search(head, key))
+        printf("Element found");
+    else
+        printf("Element not found");
+
+    return 0;
+}
+Sample Run
+Input
+5
+10 20 30 40 50
+30
+
+Output
+Element found
