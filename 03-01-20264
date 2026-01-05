@@ -250,4 +250,362 @@ int main() {
 }
 
 ------------------------------------------------------------pop an element------------------------------------------------------------------------------------
-you have to complete guys
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+// Define a structure for a stack node
+typedef struct Node {
+    int data;
+    struct Node* next;
+} Node;
+
+// Stack structure
+typedef struct {
+    Node* top;
+} Stack;
+
+// Initialize stack
+void initStack(Stack* s) {
+    s->top = NULL;
+}
+
+// Push operation
+void push(Stack* s, int x) {
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    newNode->data = x;
+    newNode->next = s->top;
+    s->top = newNode;
+}
+
+// Pop operation
+int pop(Stack* s, int* success) {
+    if (s->top == NULL) {
+        *success = 0;
+        return 0;
+    }
+
+    Node* temp = s->top;
+    int value = temp->data;
+    s->top = temp->next;
+    free(temp);
+
+    *success = 1;
+    return value;
+}
+
+int main() {
+    Stack s;
+    initStack(&s);
+
+    int n;
+    scanf("%d", &n);
+
+    while (n--) {
+        char operation[10];
+        scanf("%s", operation);
+
+        if (strcmp(operation, "push") == 0) {
+            int x;
+            scanf("%d", &x);
+            push(&s, x);
+        } 
+        else if (strcmp(operation, "pop") == 0) {
+            int success;
+            int result = pop(&s, &success);
+
+            if (success)
+                printf("%d\n", result);
+            else
+                printf("Stack is empty\n");
+        }
+    }
+    return 0;
+}
+------------------------------------------------------------------------------------------- check if a stack is empty --------------------------------------------------------------------------------------
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 100000
+
+typedef struct {
+    int arr[MAX];
+    int top;
+} Stack;
+
+// Initialize stack
+void initStack(Stack *s) {
+    s->top = -1;
+}
+
+// Push operation
+void push(Stack *s, int x) {
+    if (s->top == MAX - 1)
+        return;
+    s->arr[++s->top] = x;
+}
+
+// Pop operation
+void pop(Stack *s) {
+    if (s->top == -1)
+        return;
+    s->top--;
+}
+
+// Check if stack is empty
+int isEmpty(Stack *s) {
+    return s->top == -1;
+}
+
+int main() {
+    Stack s;
+    initStack(&s);
+
+    int n;
+    scanf("%d", &n);
+
+    while (n--) {
+        char op[10];
+        scanf("%s", op);
+
+        if (strcmp(op, "push") == 0) {
+            int x;
+            scanf("%d", &x);
+            push(&s, x);
+        }
+        else if (strcmp(op, "pop") == 0) {
+            pop(&s);
+        }
+        else if (strcmp(op, "isempty") == 0) {
+            if (isEmpty(&s))
+                printf("Stack is empty\n");
+            else
+                printf("Stack is not empty\n");
+        }
+    }
+    return 0;
+}
+--------------------------------------------------------------------------------------- find the size of a stack ----------------------------------------------------------------------------------------------
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+// Define a structure for a stack node
+typedef struct Node {
+    int data;
+    struct Node* next;
+} Node;
+
+// Stack structure with top pointer and size count
+typedef struct {
+    Node* top;
+    int size;
+} Stack;
+
+// Initialize stack
+void initStack(Stack* s) {
+    s->top = NULL;
+    s->size = 0;
+}
+
+// Push operation
+void push(Stack* s, int x) {
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    newNode->data = x;
+    newNode->next = s->top;
+    s->top = newNode;
+    s->size++;
+}
+
+// Pop operation
+void pop(Stack* s) {
+    if (s->top == NULL)
+        return;
+
+    Node* temp = s->top;
+    s->top = s->top->next;
+    free(temp);
+    s->size--;
+}
+
+// Get stack size
+int getSize(Stack* s) {
+    return s->size;
+}
+
+int main() {
+    Stack s;
+    initStack(&s);
+
+    int n;
+    scanf("%d", &n);
+
+    while (n--) {
+        char op[10];
+        scanf("%s", op);
+
+        if (strcmp(op, "push") == 0) {
+            int x;
+            scanf("%d", &x);
+            push(&s, x);
+        }
+        else if (strcmp(op, "pop") == 0) {
+            pop(&s);
+        }
+        else if (strcmp(op, "size") == 0) {
+            printf("%d\n", getSize(&s));
+        }
+    }
+    return 0;
+}
+---------------------------------------------------------------------------------reverse a string using a stack---------------------------------------------------------------------------------------------
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+// Stack structure
+typedef struct {
+    char *arr;
+    int top;
+    int capacity;
+} Stack;
+
+// Initialize stack
+void initStack(Stack *stack, int capacity) {
+    stack->capacity = capacity;
+    stack->top = -1;
+    stack->arr = (char *)malloc(capacity * sizeof(char));
+}
+
+// Push character onto stack
+void push(Stack *stack, char ch) {
+    stack->arr[++stack->top] = ch;
+}
+
+// Pop character from stack
+char pop(Stack *stack) {
+    return stack->arr[stack->top--];
+}
+
+int main() {
+    char str[100001];
+    
+    // Read input string (including spaces)
+    fgets(str, sizeof(str), stdin);
+    str[strcspn(str, "\n")] = '\0';   // Remove newline
+
+    int len = strlen(str);
+
+    Stack stack;
+    initStack(&stack, len);
+
+    // Push all characters onto stack
+    for (int i = 0; i < len; i++) {
+        push(&stack, str[i]);
+    }
+
+    // Pop characters to reverse string
+    for (int i = 0; i < len; i++) {
+        str[i] = pop(&stack);
+    }
+
+    // Print reversed string
+    printf("%s", str);
+
+    free(stack.arr);
+    return 0;
+}
+-------------------------------------------------------------------------infix expression to postfix notation using a stack.-------------------------------------------------------------------------------
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <string.h>
+
+#define MAX 1000
+
+// Stack structure
+typedef struct {
+    char arr[MAX];
+    int top;
+} Stack;
+
+// Initialize stack
+void initStack(Stack *s) {
+    s->top = -1;
+}
+
+// Push
+void push(Stack *s, char ch) {
+    s->arr[++s->top] = ch;
+}
+
+// Pop
+char pop(Stack *s) {
+    return s->arr[s->top--];
+}
+
+// Peek
+char peek(Stack *s) {
+    return s->arr[s->top];
+}
+
+// Check empty
+int isEmpty(Stack *s) {
+    return s->top == -1;
+}
+
+// Operator precedence
+int precedence(char ch) {
+    if (ch == '^') return 3;
+    if (ch == '*' || ch == '/') return 2;
+    if (ch == '+' || ch == '-') return 1;
+    return 0;
+}
+
+int main() {
+    char infix[MAX], postfix[MAX];
+    Stack s;
+    initStack(&s);
+
+    scanf("%s", infix);
+
+    int k = 0;
+
+    for (int i = 0; infix[i] != '\0'; i++) {
+        char ch = infix[i];
+
+        // Operand → add to postfix
+        if (isalnum(ch)) {
+            postfix[k++] = ch;
+        }
+        // '(' → push
+        else if (ch == '(') {
+            push(&s, ch);
+        }
+        // ')' → pop till '('
+        else if (ch == ')') {
+            while (!isEmpty(&s) && peek(&s) != '(') {
+                postfix[k++] = pop(&s);
+            }
+            pop(&s); // remove '('
+        }
+        // Operator
+        else {
+            while (!isEmpty(&s) && precedence(peek(&s)) >= precedence(ch)) {
+                postfix[k++] = pop(&s);
+            }
+            push(&s, ch);
+        }
+    }
+
+    // Pop remaining operators
+    while (!isEmpty(&s)) {
+        postfix[k++] = pop(&s);
+    }
+
+    postfix[k] = '\0';
+
+    printf("%s", postfix);
+    return 0;
+}
+------------------------------------------------------------------------------------------end--------------------------------------------------------------------------------------------------------------------------
