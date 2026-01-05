@@ -220,7 +220,6 @@ Stack after pushing elements: [-10, 15, 5]
 
 --------------------------------------------------------Push an Element into Stack----------------------------------------------------------------------------------
 #include <stdio.h>
-#include <string.h>
 
 #define MAX 100000
 
@@ -228,29 +227,27 @@ int main() {
     int n;
     int stack[MAX];
     int top = -1;
-    char op[10];
-    int x;
 
     scanf("%d", &n);
 
+    // Push elements
     for (int i = 0; i < n; i++) {
-        scanf("%s", op);
-
-        if (strcmp(op, "push") == 0) {
-            scanf("%d", &x);
-            stack[++top] = x;   // PUSH
-        }
-        else if (strcmp(op, "pop") == 0) {
-            if (top == -1) {
-                printf("Stack is empty\n");
-            } else {
-                printf("%d\n", stack[top]);  // POP
-                top--;
-            }
-        }
+        int x;
+        scanf("%d", &x);
+        stack[++top] = x;   // PUSH operation
     }
+
+    // Print stack in LIFO order
+    printf("Stack after pushing elements: [");
+    for (int i = top; i >= 0; i--) {
+        printf("%d", stack[i]);
+        if (i != 0)
+            printf(", ");
+    }
+    printf("]");
 
     return 0;
 }
+
 ------------------------------------------------------------pop an element------------------------------------------------------------------------------------
 you have to complete guys
