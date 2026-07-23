@@ -52,3 +52,37 @@ Answer = 3
 Order matters.
 
 Permutation.
+
+Permutation determines the number of possible arrangements for a specific set of elements. Therefore, it plays a big role in computer science, cryptography, and operations research.
+
+Note: In permutations, order matters; for example, (2, 1) and (1, 2) are counted as different.
+For example, take a set {1, 2, 3}:
+
+All Permutations taking all three objects are {1, 2, 3}, {1, 3, 2}, {2, 1, 3}, {2, 3, 1}, {3, 1, 2}, {3, 2, 1}. 
+All Permutations taking two objects at a time are, {1, 2}, {1, 3}, {2, 3}, {3, 2}, {3, 1}, {2, 1}. 
+Calculating permutations involves figuring out how many different ways you can arrange a set of items where the order matters.
+
+
+Question:From a group of 7 men and 6 women, five persons are to be selected to form a committee so that at least 3 men are there on the committee. In how many ways can it be done?
+
+A:564
+
+B:645
+
+C:735
+
+D:756
+
+E:None of these
+Answer: Option D
+
+Explanation:
+We may have (3 men and 2 women) or (4 men and 1 woman) or (5 men only).
+
+ Required number of ways	= (7C3 x 6C2) + (7C4 x 6C1) + (7C5)
+=		7 x 6 x 5	x	6 x 5		+ (7C3 x 6C1) + (7C2)
+3 x 2 x 1	2 x 1
+= 525 +		7 x 6 x 5	x 6		+		7 x 6	
+3 x 2 x 1	2 x 1
+= (525 + 210 + 21)
+= 756.
