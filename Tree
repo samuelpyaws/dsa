@@ -1,0 +1,393 @@
+#1. Create a Binary Tree
+
+Start with a simple structure.
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node *left;
+    struct Node *right;
+};
+
+int main() {
+
+    struct Node *root = malloc(sizeof(struct Node));
+    struct Node *n1 = malloc(sizeof(struct Node));
+    struct Node *n2 = malloc(sizeof(struct Node));
+
+    root->data = 10;
+    root->left = n1;
+    root->right = n2;
+
+    n1->data = 20;
+    n1->left = NULL;
+    n1->right = NULL;
+
+    n2->data = 30;
+    n2->left = NULL;
+    n2->right = NULL;
+
+    printf("Root = %d\n", root->data);
+    printf("Left = %d\n", root->left->data);
+    printf("Right = %d\n", root->right->data);
+
+    return 0;
+}
+
+Tree:
+       10
+      /  \
+    20    30
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#2. Preorder Traversal
+Rule
+Root → Left → Right
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node *left;
+    struct Node *right;
+};
+
+void preorder(struct Node *root) {
+
+    if (root == NULL)
+        return;
+
+    printf("%d ", root->data);
+
+    preorder(root->left);
+
+    preorder(root->right);
+}
+
+int main() {
+
+    struct Node *root = malloc(sizeof(struct Node));
+    struct Node *n1 = malloc(sizeof(struct Node));
+    struct Node *n2 = malloc(sizeof(struct Node));
+
+    root->data = 10;
+    root->left = n1;
+    root->right = n2;
+
+    n1->data = 20;
+    n1->left = NULL;
+    n1->right = NULL;
+
+    n2->data = 30;
+    n2->left = NULL;
+    n2->right = NULL;
+
+    preorder(root);
+
+    return 0;
+}
+
+Output:
+10 20 30
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#3. Inorder Traversal
+Rule
+Left → Root → Right
+void inorder(struct Node *root) {
+
+    if (root == NULL)
+        return;
+
+    inorder(root->left);
+
+    printf("%d ", root->data);
+
+    inorder(root->right);
+}
+For:
+       10
+      /  \
+    20    30
+Output:
+20 10 30
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#4. Postorder Traversal
+#Rule
+Left → Right → Root
+void postorder(struct Node *root) {
+
+    if (root == NULL)
+        return;
+
+    postorder(root->left);
+
+    postorder(root->right);
+
+    printf("%d ", root->data);
+}
+Output:
+20 30 10
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+5. Level Order Traversal — BFS
+
+Here we use a queue.
+       10
+      /  \
+    20    30
+   / \
+ 40  50
+Output:
+10 20 30 40 50
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node *left;
+    struct Node *right;
+};
+
+void levelOrder(struct Node *root) {
+
+    if (root == NULL)
+        return;
+
+    struct Node *queue[100];
+
+    int front = 0;
+    int rear = 0;
+
+    queue[rear++] = root;
+
+    while (front < rear) {
+
+        struct Node *temp = queue[front++];
+
+        printf("%d ", temp->data);
+
+        if (temp->left != NULL)
+            queue[rear++] = temp->left;
+
+        if (temp->right != NULL)
+            queue[rear++] = temp->right;
+    }
+}
+
+#6. Count Number of Nodes
+
+#For:
+       10
+      /  \
+    20    30
+   / \
+ 40  50
+There are 5 nodes.
+int countNodes(struct Node *root) {
+
+    if (root == NULL)
+        return 0;
+
+    return 1
+         + countNodes(root->left)
+         + countNodes(root->right);
+}
+
+Logic:
+Current node
+     +
+Left subtree nodes
+     +
+Right subtree nodes
+#7. Count Leaf Nodes
+
+Leaf = node with no children.
+       10
+      /  \
+    20    30
+   / \
+ 40  50
+Leaves:
+40, 50, 30
+Answer:
+3
+Code:
+int countLeaves(struct Node *root) {
+
+    if (root == NULL)
+        return 0;
+
+    if (root->left == NULL && root->right == NULL)
+        return 1;
+
+    return countLeaves(root->left)
+         + countLeaves(root->right);
+}
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#8. Find Height of Tree
+
+int height(struct Node *root) {
+
+    if (root == NULL)
+        return 0;
+
+    int leftHeight = height(root->left);
+    int rightHeight = height(root->right);
+
+    if (leftHeight > rightHeight)
+        return leftHeight + 1;
+    else
+        return rightHeight + 1;
+}
+
+For:
+       10
+      /  \
+    20    30
+   /
+ 40
+
+Height in nodes:
+3
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#9. Search an Element in Binary Tree
+
+We can use DFS recursively.
+int search(struct Node *root, int key)
+{
+    if (root == NULL)
+        return 0;
+
+    if (root->data == key)
+        return 1;
+
+    if (search(root->left, key))
+        return 1;
+
+    return search(root->right, key);
+}
+Example:
+       10
+      /  \
+     20   30
+    / \
+   40 50
+Search 50:
+10 → 20 → 40 → 50
+Output:
+Found
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#10. Find Maximum Element
+int maximum(struct Node *root)
+{
+    if (root == NULL)
+        return -1;
+
+    int max = root->data;
+
+    int leftMax = maximum(root->left);
+    int rightMax = maximum(root->right);
+
+    if (leftMax > max)
+        max = leftMax;
+
+    if (rightMax > max)
+        max = rightMax;
+
+    return max;
+}
+Example:
+       10
+      /  \
+     20   30
+    / \
+   40 50
+Output:
+Maximum = 50
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#11. Find Minimum Element
+
+Same idea, but use minimum.
+int minimum(struct Node *root)
+{
+    if (root == NULL)
+        return 999999;
+
+    int min = root->data;
+
+    int leftMin = minimum(root->left);
+    int rightMin = minimum(root->right);
+
+    if (leftMin < min)
+        min = leftMin;
+
+    if (rightMin < min)
+        min = rightMin;
+
+    return min;
+}
+Example:
+       10
+      /  \
+     20   30
+    / \
+   5  50
+Output:
+Minimum = 5
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+12. Mirror a Binary Tree
+This is an important recursion problem.
+Original:
+       10
+      /  \
+     20   30
+    / \
+   40 50
+Mirror:
+       10
+      /  \
+     30   20
+         / \
+        50 40
+Code
+void mirror(struct Node *root)
+{
+    if (root == NULL)
+        return;
+
+    struct Node *temp;
+
+    temp = root->left;
+    root->left = root->right;
+    root->right = temp;
+
+    mirror(root->left);
+    mirror(root->right);
+}
+Logic
+At every node:
+Swap(left, right)
+Then recursively mirror both subtrees.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#13. Sum of All Nodes
+Example:
+       10
+      /  \
+     20   30
+    / \
+   40 50
+Sum:
+10 + 20 + 30 + 40 + 50
+= 150
+int sumNodes(struct Node *root)
+{
+    if (root == NULL)
+        return 0;
+
+    return root->data
+         + sumNodes(root->left)
+         + sumNodes(root->right);
+}
